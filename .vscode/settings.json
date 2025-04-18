@@ -1,0 +1,17 @@
+{
+    "cSpell.words": [
+        "rubocop"
+    ],
+    "github.copilot.enable": {
+        "*": false,
+    },
+    "rubyLsp.formatter": "rubocop",
+    "rubyLsp.rubyVersionManager": {
+        "identifier": "auto"
+    },
+    "[ruby]": {
+        "editor.defaultFormatter": "Shopify.ruby-lsp",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 2
+    }
+}
