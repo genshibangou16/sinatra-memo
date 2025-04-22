@@ -13,15 +13,19 @@ before do
 end
 
 get '/' do
-  @css = 'index.css'
-  erb :index
+  redirect '/memos'
 end
 
-get '/add' do
-  erb :add
+get '/memos' do
+  @css = 'memos.css'
+  erb :memos
 end
 
-get '/:memo_id' do
+get '/memos/new' do
+  erb :new
+end
+
+get '/memos/:memo_id' do
   memo_id = params[:memo_id]
 
   if @memos.key?(memo_id)
@@ -32,4 +36,9 @@ get '/:memo_id' do
     status 404
     erb :not_found
   end
+end
+
+not_found do
+  status 404
+  erb :not_found
 end

@@ -28,16 +28,6 @@
     text-align: center;
 }
 
-/* .memo-item {
-    list-style: disc;
-    margin-left: 1rem;
-}
-
-.memo-item__link {
-    text-decoration: underline;
-    color: blue;
-} */
-
 /* メモリスト */
 .memo-list {
     list-style: none;
