@@ -1,2 +1,6 @@
-<form>
+<form method="post" action="/memos" class="memo-form">
+  <input name="csrf_token" type="hidden">
+  <input name="title" class="memo-form__title" type="text" placeholder="タイトル">
+  <textarea name="content" class="memo-form__content" placeholder="メモの内容"></textarea>
+  <button class="memo-form__submit" type="submit">保存</button>
 </form>
