@@ -3,10 +3,13 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'json'
+require 'securerandom'
+require 'date'
+
+MEMOS_FILE_PATH = './public/memos.json'
 
 before do
-  file = File.read('./public/memo.json')
-  parsed = JSON.parse(file)
+  parsed = JSON.load_file(MEMOS_FILE_PATH)
   @memos = parsed.transform_values do |memo|
     memo.transform_keys(&:to_sym)
   end
@@ -18,11 +21,28 @@ end
 
 get '/memos' do
   @css = 'memos.css'
+  @additional_button = { href: '/memos/new', text: '追加' }
   erb :memos
 end
 
+post '/memos' do
+  uuid = SecureRandom.uuid
+  @title = params[:title]
+  @content = params[:content]
+  @memos[uuid] = { title: @title, timestamp: DateTime.now.iso8601, content: @content }
+  File.open(MEMOS_FILE_PATH, 'w') do |f|
+    JSON.dump(@memos, f)
+  end
+  redirect "/memos/#{uuid}"
+end
+
 get '/memos/new' do
+  @css = 'new.css'
   erb :new
+end
+
+get '/memos/' do
+  redirect '/memos'
 end
 
 get '/memos/:memo_id' do

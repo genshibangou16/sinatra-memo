@@ -24,9 +24,38 @@ main {
     position: relative;
 }
 
+.header {
+    height: 5rem;
+    padding: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 1fr 4rem;
+    align-items: center;
+}
+
 /* タイトル */
-h1 {
+.header__title {
     font-size: 1.5rem;
-    margin: 1rem 0;
+    text-align: center;
+}
+
+.header__button {
+    margin-left: auto;
+    width: 4rem;
+    height: 2rem;
+    background-color: #e0e0e0;
+    border-radius: 0.5rem;
+    border: 1px solid #aaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__link {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    line-height: 2rem;
     text-align: center;
 }

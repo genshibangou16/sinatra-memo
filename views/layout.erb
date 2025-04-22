@@ -6,14 +6,23 @@
     <title>メモアプリ</title>
     <link rel="stylesheet" href="/css/preflight.css">
     <link rel="stylesheet" href="/css/layout.css">
-    <% unless @css.nil? %>
+    <% if @css %>
       <link rel="stylesheet" href="/css/<%= @css %>">
     <% end %>
   </head>
   <body>
     <div class="wrapper">
       <main>
-        <h1>メモアプリ</h1>
+        <header class="header">
+          <h1 class="header__title">メモアプリ</h1>
+          <% if @additional_button %>
+            <div class="header__button">
+              <a class="" href="<%= @additional_button[:href] %>"><%= @additional_button[:text] %></a>
+            </div>
+          <% else %>
+            <div></div>
+          <% end %>
+        </header>
         <%= yield %>
       </main>
     </div>
