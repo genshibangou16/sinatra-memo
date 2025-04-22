@@ -1,11 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メモアプリ</title>
-</head>
-<body>
-    <%= yield %>
-</body>
+    <link rel="stylesheet" href="preflight.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="<%= @css %>">
+  </head>
+  <body>
+    <div class="wrapper">
+      <main>
+        <h1>メモアプリ</h1>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
 </html>

@@ -1,0 +1,67 @@
+.header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2rem;
+}
+
+.header__button {
+    margin-left: auto;
+    width: 4rem;
+    height: 2rem;
+    background-color: #e0e0e0;
+    border-radius: 0.5rem;
+    border: 1px solid #aaa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__link {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    width: 100%;
+    height: 100%;
+    line-height: 2rem;
+    text-align: center;
+}
+
+/* .memo-item {
+    list-style: disc;
+    margin-left: 1rem;
+}
+
+.memo-item__link {
+    text-decoration: underline;
+    color: blue;
+} */
+
+/* メモリスト */
+.memo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* メモアイテム */
+.memo-item {
+    margin: 0.5rem 0;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.memo-item::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #555;
+}
+
+/* メモリンク */
+.memo-item__link {
+    text-decoration: underline;
+    color: #1e90ff; /* モダンな青色 */
+    font-size: 1rem;
+}

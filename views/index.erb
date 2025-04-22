@@ -1,1 +1,12 @@
-<%= "Hello world!" %>
+<section class="header">
+  <div class="header__button">
+    <a class="header__link" href="/add">追加</a>
+  </div>
+</section>
+<section>
+  <ul class="memo-list">
+    <% @memos.each do |id, content| %>
+      <li class="memo-item"><a href="<%= id %>" class="memo-item__link"><%= content[:title] %></a></li>
+    <% end %>
+  </ul>
+</section>

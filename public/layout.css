@@ -1,0 +1,32 @@
+/* 全体レイアウト */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f8f8; /* 明るめグレー背景 */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* ラッパー */
+.wrapper {
+    width: 375px;
+    max-width: 100%;
+    min-height: 100dvh;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* メイン */
+main {
+    position: relative;
+}
+
+/* タイトル */
+h1 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    text-align: center;
+}
