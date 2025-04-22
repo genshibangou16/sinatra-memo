@@ -6,7 +6,9 @@
     <title>メモアプリ</title>
     <link rel="stylesheet" href="/css/preflight.css">
     <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/<%= @css %>">
+    <% unless @css.nil? %>
+      <link rel="stylesheet" href="/css/<%= @css %>">
+    <% end %>
   </head>
   <body>
     <div class="wrapper">
