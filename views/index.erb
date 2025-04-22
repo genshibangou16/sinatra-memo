@@ -6,7 +6,7 @@
 <section>
   <ul class="memo-list">
     <% @memos.each do |id, content| %>
-      <li class="memo-item"><a href="<%= id %>" class="memo-item__link"><%= content[:title] %></a></li>
+      <li class="memo-item"><a href="/memo/<%= id %>" class="memo-item__link"><%= content[:title] %></a></li>
     <% end %>
   </ul>
 </section>
