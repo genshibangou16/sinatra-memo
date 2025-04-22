@@ -21,5 +21,8 @@
         "editor.tabSize": 2,
         "editor.defaultFormatter": "aliariff.vscode-erb-beautify",
         "editor.formatOnSave": true
+    },
+    "vscode-erb-beautify.customEnvVar": {
+        "LC_ALL": "en_US.UTF-8"
     }
 }
