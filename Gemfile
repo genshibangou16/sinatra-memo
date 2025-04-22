@@ -2,6 +2,7 @@
 
 source 'https://rubygems.org'
 
+gem 'erb_lint', require: false
 gem 'puma'
 gem 'rackup'
 gem 'sinatra'
