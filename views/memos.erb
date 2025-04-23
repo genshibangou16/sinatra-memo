@@ -1,7 +1,12 @@
-<section>
-  <ul class="memo-list">
+<section class="memo-list">
+  <% if @memos.empty? %>
+    <p class="memo-list__empty-message">メモを追加してください。</p>
+  <% end %>
+  <ul class="memo-list__items">
     <% @memos.each do |id, content| %>
-      <li class="memo-item"><a href="/memos/<%= id %>" class="memo-item__link"><%= content[:title] %></a></li>
+      <li class="memo-list__item">
+        <a href="/memos/<%= h id %>" class="memo-list__link"><%= h content[:title] %></a>
+      </li>
     <% end %>
   </ul>
 </section>

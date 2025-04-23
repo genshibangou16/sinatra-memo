@@ -1,18 +1,24 @@
-/* メモリスト */
+/* メモリスト本体 */
 .memo-list {
-    list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
 }
 
-/* メモアイテム */
-.memo-item {
+/* メモリスト内のul（リスト全体） */
+.memo-list__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 各メモアイテム */
+.memo-list__item {
     margin: 0.5rem 0;
     padding-left: 1rem;
     position: relative;
 }
 
-.memo-item::before {
+.memo-list__item::before {
     content: "•";
     position: absolute;
     left: 0;
@@ -20,8 +26,15 @@
 }
 
 /* メモリンク */
-.memo-item__link {
+.memo-list__link {
     text-decoration: underline;
-    color: #1e90ff; /* モダンな青色 */
+    color: #1e90ff;
     font-size: 1rem;
+}
+
+/* 空メッセージ */
+.memo-list__empty-message {
+    color: #999;
+    font-style: italic;
+    margin-bottom: 1rem;
 }
