@@ -1,4 +1,15 @@
-<div class="sticky-note">
-  <h2 class="sticky-note__title"><%= h @memo[:title] %></h2>
-  <p class="sticky-note__body"><%= h @memo[:content] %></p>
-</div>
+<section>
+  <div class="sticky-note">
+    <h2 class="sticky-note__title"><%= h @memo[:title] %></h2>
+    <p class="sticky-note__body"><%= h @memo[:content] %></p>
+  </div>
+</section>
+<section class="options">
+  <div class="button">
+    <a class="button__link" href="/memos/<%= h @memo[:id] %>/edit">変更</a>
+  </div>
+  <form class="button" method="post" action="/memos/<%= h @memo[:id] %>">
+    <input type="hidden" value="delete" name="_method" />
+    <button class="button__link" type="submit">削除</button>
+  </form>
+</section>

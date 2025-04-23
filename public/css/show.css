@@ -23,3 +23,10 @@
     font-size: 1rem;
     margin-bottom: .5rem;
 }
+
+.options {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
