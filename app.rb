@@ -37,6 +37,7 @@ post '/memos' do
 end
 
 get '/memos/new' do
+  @additional_button = { href: '/memos', text: '戻る' }
   @css = 'new.css'
   erb :new
 end
@@ -51,6 +52,7 @@ get '/memos/:memo_id' do
   if @memos.key?(memo_id)
     @css = 'show.css'
     @memo = @memos[memo_id]
+    @additional_button = { href: '/memos', text: '戻る' }
     erb :show
   else
     status 404
