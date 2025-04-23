@@ -3,9 +3,9 @@
     <p class="memo-list__empty-message">メモを追加してください。</p>
   <% end %>
   <ul class="memo-list__items">
-    <% @memos.each do |id, content| %>
+    <% @memos.each do |memo| %>
       <li class="memo-list__item">
-        <a href="/memos/<%= h id %>" class="memo-list__link"><%= h content[:title] %></a>
+        <a href="/memos/<%= h memo[:id] %>" class="memo-list__link"><%= h memo[:title] %></a>
       </li>
     <% end %>
   </ul>
