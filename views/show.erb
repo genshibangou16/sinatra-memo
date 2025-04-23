@@ -9,7 +9,7 @@
     <a class="button__link" href="/memos/<%= h @memo[:id] %>/edit">変更</a>
   </div>
   <form class="button" method="post" action="/memos/<%= h @memo[:id] %>">
-    <input type="hidden" value="delete" name="_method" />
+    <input type="hidden" value="delete" name="_method">
     <button class="button__link" type="submit">削除</button>
   </form>
 </section>
