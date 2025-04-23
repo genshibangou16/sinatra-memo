@@ -9,9 +9,19 @@ require 'date'
 MEMOS_FILE_PATH = './public/memos.json'
 
 before do
-  parsed = JSON.load_file(MEMOS_FILE_PATH)
-  @memos = parsed.transform_values do |memo|
-    memo.transform_keys(&:to_sym)
+  if File.exist?(MEMOS_FILE_PATH) && !File.empty?(MEMOS_FILE_PATH)
+    parsed = JSON.load_file(MEMOS_FILE_PATH)
+    @memos = parsed.transform_values do |memo|
+      memo.transform_keys(&:to_sym)
+    end
+  else
+    @memos = {}
+  end
+end
+
+helpers do
+  def h(text)
+    Rack::Utils.escape_html(text)
   end
 end
 
