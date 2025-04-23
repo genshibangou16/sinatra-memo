@@ -7,15 +7,22 @@
 1. 作業PCの任意の作業ディレクトリにて`git clone`してください。
 
 ```
-$ git clone https://github.com/genshibangou16/sinatra-memo.git
-```
-2. `bundle`コマンドで必要なモジュールをインストールしてください。
-
-```
-$ bundle
+git clone https://github.com/genshibangou16/sinatra-memo.git
 ```
 
-3. Webアプリを起動します。
+2. 取得したフォルダーに移動します。
+
+```
+cd sinatra-memo
+```
+
+3. `bundle`コマンドで必要なモジュールをインストールしてください。
+
+```
+bundle
+```
+
+4. Webアプリを起動します。
 
 ```
 bundle exec ruby app.rb
