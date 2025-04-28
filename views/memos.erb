@@ -1,3 +1,8 @@
+<% content_for :header_button do %>
+  <div class="button">
+    <a class="button__link" href="/memos/new">追加</a>
+  </div>
+<% end %>
 <section class="memo-list">
   <% if @memos.empty? %>
     <p class="memo-list__empty-message">メモを追加してください。</p>

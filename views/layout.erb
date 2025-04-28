@@ -15,11 +15,7 @@
       <main>
         <header class="header">
           <h1 class="header__title">メモアプリ</h1>
-          <% if @additional_button %>
-            <div class="button">
-              <a class="button__link" href="<%= @additional_button[:href] %>"><%= @additional_button[:text] %></a>
-            </div>
-          <% else %>
+          <% yield_content :header_button do %>
             <div></div>
           <% end %>
         </header>

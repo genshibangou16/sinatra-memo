@@ -2,6 +2,7 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sinatra/content_for'
 require 'json'
 require 'securerandom'
 require 'date'
@@ -9,9 +10,9 @@ require 'date'
 MEMOS_FILE_PATH = './public/memos.json'
 
 def load_memos(path)
-  return [] unless File.exist?(path) && !File.empty?(path)
+  return [] if !File.exist?(path) || File.empty?(path)
 
-  JSON.load_file(path, symbolize_names: true)
+  JSON.load_file(path, symbolize_names: true)[:memos]
 end
 
 def save_memos(memos)
@@ -24,10 +25,6 @@ def find_memo_by_id(memos, id)
   memos.find { |memo| memo[:id] == id } || {}
 end
 
-def delete_memo_by_id(memos, id)
-  memos.reject { |memo| memo[:id] == id }
-end
-
 helpers do
   def h(text)
     Rack::Utils.escape_html(text)
@@ -35,7 +32,7 @@ helpers do
 end
 
 before do
-  @memos = load_memos(MEMOS_FILE_PATH)[:memos]
+  @memos = load_memos(MEMOS_FILE_PATH)
 end
 
 get '/' do
@@ -44,7 +41,6 @@ end
 
 get '/memos' do
   @css = 'memos.css'
-  @additional_button = { href: '/memos/new', text: '追加' }
   erb :memos
 end
 
@@ -60,7 +56,6 @@ post '/memos' do
 end
 
 get '/memos/new' do
-  @additional_button = { href: '/memos', text: '戻る' }
   @css = 'new.css'
   erb :new
 end
@@ -78,7 +73,6 @@ get '/memos/:memo_id' do
     erb :not_found
   else
     @css = 'show.css'
-    @additional_button = { href: '/memos', text: 'ホーム' }
     erb :show
   end
 end
@@ -91,7 +85,7 @@ delete '/memos/:memo_id' do
     status 404
     erb :not_found
   else
-    @memos = delete_memo_by_id(@memos, memo_id)
+    @memos = @memos.reject { |memo| memo[:id] == memo_id }
     save_memos(@memos)
     redirect '/memos'
   end
@@ -110,7 +104,7 @@ patch '/memos/:memo_id' do
     title = params[:title]
     content = params[:content]
     @memo = { id: memo_id, title: title, timestamp: DateTime.now.iso8601, content: content }
-    @memos = delete_memo_by_id(@memos, memo_id)
+    @memos = @memos.reject { |memo| memo[:id] == memo_id }
     @memos.push(@memo)
     save_memos(@memos)
     redirect "/memos/#{memo_id}"
@@ -126,13 +120,11 @@ get '/memos/:memo_id/edit' do
     erb :not_found
   else
     @css = 'new.css'
-    @additional_button = { href: "/memos/#{memo_id}", text: '戻る' }
     erb :new
   end
 end
 
 get '/error' do
-  @additional_button = { href: '/memos', text: 'ホーム' }
   erb :error
 end
 
