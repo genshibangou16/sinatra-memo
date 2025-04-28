@@ -7,7 +7,7 @@ require 'json'
 require 'securerandom'
 require 'date'
 
-MEMOS_FILE_PATH = './public/memos.json'
+MEMOS_FILE_PATH = './memos.json'
 
 def load_memos(path)
   return [] if !File.exist?(path) || File.empty?(path)
