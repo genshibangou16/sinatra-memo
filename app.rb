@@ -25,6 +25,13 @@ def find_memo_by_id(memos, id)
   memos.find { |memo| memo[:id] == id } || {}
 end
 
+def redirect_no_title(params)
+  status 422
+  @error_message = 'タイトルは必須です。'
+  @content = params[:content]
+  erb :new
+end
+
 helpers do
   def h(text)
     Rack::Utils.escape_html(text)
@@ -44,14 +51,16 @@ get '/memos' do
 end
 
 post '/memos' do
-  redirect '/error' if params[:title].empty?
-
-  uuid = SecureRandom.uuid
-  title = params[:title]
-  content = params[:content]
-  @memos.push({ id: uuid, title: title, timestamp: DateTime.now.iso8601, content: content })
-  save_memos(@memos)
-  redirect "/memos/#{uuid}"
+  if params[:title].empty?
+    redirect_no_title(params)
+  else
+    uuid = SecureRandom.uuid
+    title = params[:title]
+    content = params[:content]
+    @memos.push({ id: uuid, title: title, timestamp: DateTime.now.iso8601, content: content })
+    save_memos(@memos)
+    redirect "/memos/#{uuid}"
+  end
 end
 
 get '/memos/new' do
@@ -95,9 +104,9 @@ patch '/memos/:memo_id' do
   if @memo.empty?
     status 404
     erb :not_found
+  elsif params[:title].empty?
+    redirect_no_title(params)
   else
-    redirect '/error' if params[:title].empty?
-
     title = params[:title]
     content = params[:content]
     @memo = { id: memo_id, title: title, timestamp: DateTime.now.iso8601, content: content }

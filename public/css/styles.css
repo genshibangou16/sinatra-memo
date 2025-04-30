@@ -79,6 +79,10 @@
     transition: background-color 0.2s ease;
 }
 
+.error-message {
+    color: red;
+}
+
 /* CSS for memos.erb */
 
 .memo-list {
