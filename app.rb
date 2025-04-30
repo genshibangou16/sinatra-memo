@@ -40,7 +40,6 @@ get '/' do
 end
 
 get '/memos' do
-  @css = 'memos.css'
   erb :memos
 end
 
@@ -56,7 +55,6 @@ post '/memos' do
 end
 
 get '/memos/new' do
-  @css = 'new.css'
   erb :new
 end
 
@@ -72,7 +70,6 @@ get '/memos/:memo_id' do
     status 404
     erb :not_found
   else
-    @css = 'show.css'
     erb :show
   end
 end
@@ -119,7 +116,6 @@ get '/memos/:memo_id/edit' do
     status 404
     erb :not_found
   else
-    @css = 'new.css'
     erb :new
   end
 end
