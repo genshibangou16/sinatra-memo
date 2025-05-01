@@ -25,7 +25,7 @@ def find_memo_by_id(memos, id)
   memos.find { |memo| memo[:id] == id } || {}
 end
 
-def redirect_no_title(params)
+def warn_no_title(params)
   status 422
   @error_message = 'タイトルは必須です。'
   @content = params[:content]
@@ -52,7 +52,7 @@ end
 
 post '/memos' do
   if params[:title].empty?
-    redirect_no_title(params)
+    warn_no_title(params)
   else
     uuid = SecureRandom.uuid
     title = params[:title]
@@ -105,7 +105,7 @@ patch '/memos/:memo_id' do
     status 404
     erb :not_found
   elsif params[:title].empty?
-    redirect_no_title(params)
+    warn_no_title(params)
   else
     title = params[:title]
     content = params[:content]
