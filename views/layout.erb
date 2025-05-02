@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>メモアプリ</title>
+    <link rel="stylesheet" href="/css/preflight.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <main>
+        <header class="header">
+          <h1 class="header__title">メモアプリ</h1>
+          <% yield_content :header_button do %>
+            <div></div>
+          <% end %>
+        </header>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>
