@@ -6,23 +6,48 @@ require 'sinatra/content_for'
 require 'json'
 require 'securerandom'
 require 'date'
+require 'pg'
 
-MEMOS_FILE_PATH = './memos.json'
-
-def load_memos(path)
-  return [] if !File.exist?(path) || File.empty?(path)
-
-  JSON.load_file(path, symbolize_names: true)[:memos]
+def conn
+  @conn ||= PG.connect(dbname: 'fbc_memo_app')
 end
 
-def save_memos(memos)
-  File.open(MEMOS_FILE_PATH, 'w') do |f|
-    JSON.dump({ memos: memos }, f)
+def insert_memo(id:, title:, content:)
+  conn.exec('insert into memos (id, title, content) values ($1::uuid, $2::text, $3::text)', [id, title, content])
+end
+
+def select_memos
+  result = conn.exec('select * from memos')
+  return [] if result.count.zero?
+
+  result.map do |row|
+    {
+      id: row['id'],
+      title: row['title'],
+      content: row['content'],
+      timestamptz: row['timestamptz']
+    }
   end
 end
 
-def find_memo_by_id(memos, id)
-  memos.find { |memo| memo[:id] == id } || {}
+def select_memo(id:)
+  result = conn.exec('select * from memos where id = $1::uuid', [id])
+  return nil if result.count.zero?
+
+  {
+    id: result[0]['id'],
+    title: result[0]['title'],
+    content: result[0]['content'],
+    timestamptz: result[0]['timestamptz']
+  }
+end
+
+def update_memo(id:, title:, content:)
+  conn.exec('update memos set title = $1::text, content = $2::text where id = $3::uuid', [title, content, id])
+end
+
+def delete_memo(id:)
+  conn.exec('delete from memos where id = $1::uuid', [id])
 end
 
 def warn_no_title(params)
@@ -38,15 +63,12 @@ helpers do
   end
 end
 
-before do
-  @memos = load_memos(MEMOS_FILE_PATH)
-end
-
 get '/' do
   redirect '/memos'
 end
 
 get '/memos' do
+  @memos = select_memos
   erb :memos
 end
 
@@ -57,8 +79,7 @@ post '/memos' do
     uuid = SecureRandom.uuid
     title = params[:title]
     content = params[:content]
-    @memos.push({ id: uuid, title: title, timestamp: DateTime.now.iso8601, content: content })
-    save_memos(@memos)
+    insert_memo(id: uuid, title: title, content: content)
     redirect "/memos/#{uuid}"
   end
 end
@@ -73,9 +94,9 @@ end
 
 get '/memos/:memo_id' do
   memo_id = params[:memo_id]
-  @memo = find_memo_by_id(@memos, memo_id)
+  @memo = select_memo(id: memo_id)
 
-  if @memo.empty?
+  if @memo.nil?
     status 404
     erb :not_found
   else
@@ -85,23 +106,22 @@ end
 
 delete '/memos/:memo_id' do
   memo_id = params[:memo_id]
-  @memo = find_memo_by_id(@memos, memo_id)
+  @memo = select_memo(id: memo_id)
 
-  if @memo.empty?
+  if @memo.nil?
     status 404
     erb :not_found
   else
-    @memos = @memos.reject { |memo| memo[:id] == memo_id }
-    save_memos(@memos)
+    delete_memo(id: memo_id)
     redirect '/memos'
   end
 end
 
 patch '/memos/:memo_id' do
   memo_id = params[:memo_id]
-  @memo = find_memo_by_id(@memos, memo_id)
+  @memo = select_memo(id: memo_id)
 
-  if @memo.empty?
+  if @memo.nil?
     status 404
     erb :not_found
   elsif params[:title].empty?
@@ -109,19 +129,16 @@ patch '/memos/:memo_id' do
   else
     title = params[:title]
     content = params[:content]
-    @memo = { id: memo_id, title: title, timestamp: DateTime.now.iso8601, content: content }
-    @memos = @memos.reject { |memo| memo[:id] == memo_id }
-    @memos.push(@memo)
-    save_memos(@memos)
+    update_memo(id: memo_id, title: title, content: content)
     redirect "/memos/#{memo_id}"
   end
 end
 
 get '/memos/:memo_id/edit' do
   memo_id = params[:memo_id]
-  @memo = find_memo_by_id(@memos, memo_id)
+  @memo = select_memo(id: memo_id)
 
-  if @memo.empty?
+  if @memo.nil?
     status 404
     erb :not_found
   else
