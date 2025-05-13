@@ -1,16 +1,16 @@
 <% content_for :header_button do %>
   <div class="button">
-    <a class="button__link" href="/memos<%= h("/#{@memo[:id]}") if @memo %>">戻る</a>
+    <a class="button__link" href="/memos<%= h("/#{@memo.id}") if @memo %>">戻る</a>
   </div>
 <% end %>
 <% if @error_message %>
   <p class="error-message"><%= h @error_message %></p>
 <% end %>
-<form method="post" action="<%= @memo ? h("/memos/#{@memo[:id]}") : '/memos' %>" class="memo-form">
+<form method="post" action="<%= @memo ? h("/memos/#{@memo.id}") : '/memos' %>" class="memo-form">
   <% if @memo %>
     <input type="hidden" value="patch" name="_method">
   <% end %>
-  <input name="title" class="memo-form__title" type="text" placeholder="タイトル" required value="<%= @memo ? h(@memo[:title]) : '' %>">
-  <textarea name="content" class="memo-form__content" placeholder="メモの内容"><%= h(@content || (@memo && @memo[:content]) || '') %></textarea>
+  <input name="title" class="memo-form__title" type="text" placeholder="タイトル" required value="<%= @memo ? h(@memo.title) : '' %>">
+  <textarea name="content" class="memo-form__content" placeholder="メモの内容"><%= h(@content || (@memo && @memo.content) || '') %></textarea>
   <button class="memo-form__submit" type="submit">保存</button>
 </form>
