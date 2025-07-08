@@ -10,7 +10,7 @@
   <ul class="memo-list__items">
     <% @memos.each do |memo| %>
       <li class="memo-list__item">
-        <a href="/memos/<%= h memo[:id] %>" class="memo-list__link"><%= h memo[:title] %></a>
+        <a href="/memos/<%= h memo.id %>" class="memo-list__link"><%= h memo.title %></a>
       </li>
     <% end %>
   </ul>
